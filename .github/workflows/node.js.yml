@@ -1,33 +1,17 @@
-name: Node.js CI
+name: Continuous Bot
 
 on:
-  push:
-    branches:
-      - main
-  pull_request:
-    branches:
-      - main
+  workflow_dispatch:
+  schedule:
+    - cron: '0 */6 * * *'  # Runs every 6 hours
 
 jobs:
-  build:
-
+  run-bot:
     runs-on: ubuntu-latest
-
-    strategy:
-      matrix:
-        node-version: [20.x]
-
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v3
-
-    - name: Set up Node.js
-      uses: actions/setup-node@v3
-      with:
-        node-version: ${{ matrix.node-version }}
-
-    - name: Install dependencies
-      run: npm install
-
-    - name: Start application
-      run: npm start
+      - name: Checkout code
+        uses: actions/checkout@v3
+      - name: Run your bot
+        run: |
+          # Your bot start command here
+          node index.js
